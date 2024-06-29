@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 function dbConnection() {
   mongoose
     .connect(
-      `mongodb+srv://sohel:sohel@mern-state.ier4ijb.mongodb.net/mern-state?retryWrites=true&w=majority`
+      `mongodb+srv://sohel:sohel@cluster0.7rhqgmu.mongodb.net/`
     )
     .then(() => {
       console.log("Database Connect");
