@@ -1,7 +1,12 @@
 //model
 const userModel = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
-const { emailValidation, validLength } = require("../helper/validation");
+const {
+  emailValidation,
+  validLength,
+  validUserName,
+} = require("../helper/validation");
 
 exports.newUser = async (req, res) => {
   try {
@@ -51,22 +56,37 @@ exports.newUser = async (req, res) => {
       });
     }
 
+    // username validation
+
+    let tempusername = fname + lname;
+
+    let finaluser = await validUserName(tempusername);
+
+    console.log((+new Date() * Math.random()).toString().substring(0, 1));
+
+    // pasword hash
+
+    const hashpasword = await bcrypt.hash(password, 10);
+
+    console.log(hashpasword);
+
     // confrom
 
     const newuser = await new userModel({
       fname,
       lname,
-      username,
       email,
-      password,
+      username: finaluser,
+      password: hashpasword,
       bday,
       bmonth,
       byear,
       gender,
-    });
+    }).save();
 
     res.status(200).json({
-      success: "Restration Create successfull",
+      newuser,
+      // success: "Restration Create successfull",
     });
   } catch (error) {}
 };
