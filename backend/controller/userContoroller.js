@@ -1,6 +1,9 @@
 //model
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwtToken = require("../helper/token");
+const emailSend = require("../helper/emailSend");
+const jwt = require("jsonwebtoken");
 
 const {
   emailValidation,
@@ -62,17 +65,13 @@ exports.newUser = async (req, res) => {
 
     let finaluser = await validUserName(tempusername);
 
-    console.log((+new Date() * Math.random()).toString().substring(0, 1));
-
     // pasword hash
 
     const hashpasword = await bcrypt.hash(password, 10);
 
-    console.log(hashpasword);
+    // user create
 
-    // confrom
-
-    const newuser = await new userModel({
+    const user = await new userModel({
       fname,
       lname,
       email,
@@ -83,10 +82,56 @@ exports.newUser = async (req, res) => {
       byear,
       gender,
     }).save();
+    // token create
+    const emailToken = jwtToken({ id: user._id.toString() }, "1h");
 
-    res.status(200).json({
-      newuser,
-      // success: "Restration Create successfull",
+    // const emailToken = jwt.sign(
+    //   { id: user._id.toString() },
+    //   process.env.SECRET_TOKEN,
+    //   {
+    //     expiresIn: "1h",
+    //   }
+    // );
+
+    // user token create
+    const Token = jwtToken({ id: user._id.toString() }, "7d");
+
+    // email send
+
+    const emalisend = emailSend(user.email, emailToken);
+
+    res.send({
+      id: user._id,
+      username: user.username,
+      profilepicture: user.profilepicture,
+      fname: user.fname,
+      lname: user.lname,
+      token: Token,
+      veryfied: user.veryfied,
+      message: "Regstration Successfull ! plase activeate email to start",
     });
   } catch (error) {}
+};
+
+exports.activeUser = async (req, res) => {
+  try {
+    const { token } = req.body;
+    const user = jwt.verify(token, process.env.SECRET_TOKEN);
+    const check = await userModel.findById(user.id);
+
+    if (check.veryfied === true) {
+      return res.status(400).json({
+        message: "This email is active",
+      });
+    } else {
+      await userModel.findByIdAndUpdate(user.id, { veryfied: true });
+      return res.status(200).json({
+        message: "account has been activated suceessfull",
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      error: error,
+    });
+  }
 };
