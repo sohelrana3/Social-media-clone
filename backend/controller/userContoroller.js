@@ -135,3 +135,51 @@ exports.activeUser = async (req, res) => {
     });
   }
 };
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // email checking
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        message: "username or password incorred!",
+      });
+    }
+
+    // password checking
+
+    const checkPassword = await bcrypt.compare(password, user.password);
+    if(!checkPassword){
+      return res.status(400).json({
+        message: "username or password incorred!",
+      })
+    }
+    //user veryfi
+    if(user.veryfied === false){
+      return res.status(400).json({
+        message: "Plase account is not veryfi",
+      })
+    }
+
+    // token create
+    const Token = jwtToken({ id: user._id.toString() }, "7d");
+    res.send({
+      id: user._id,
+      username: user.username,
+      profilepicture: user.profilepicture,
+      fname: user.fname,
+      lname: user.lname,
+      token: Token,
+      veryfied: user.veryfied,
+      message: "Login Successfull",
+    });
+
+
+  } catch (error) {
+    res.status(404).json({
+      error: error,
+    });
+  }
+};
