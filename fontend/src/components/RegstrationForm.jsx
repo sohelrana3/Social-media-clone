@@ -1,62 +1,142 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Formik, useFormik } from "formik";
+import { singUpValid } from "../validation";
+
+const initialstate = {
+  fname: "",
+  //   lname: "",
+  //   email: "",
+  //   password: "",
+  //   byear: "",
+  //   bmonth: "",
+  //   bday: "",
+  //   gender: "",
+};
 
 const RegstrationForm = () => {
+  const formik = useFormik({
+    initialValues: initialstate,
+    validationSchema: singUpValid,
+    onSubmit: () => {
+      console.log("sing up");
+    },
+  });
+
+  console.log(formik);
   return (
     <div className="w-4/5">
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <input
           className="w-full py-4 px-2 border border-gray-500-400 rounded-md mb-5 focus:outline-none"
           placeholder="Frist Name"
           type="text"
+          name="fname"
+          autoComplete="off"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.fname}
         />
         <input
           className="w-full py-4 px-2 border border-gray-500-400 rounded-md mb-5 focus:outline-none"
           placeholder="Last Name"
           type="text"
+          name="lname"
+          autoComplete="off"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.lname}
         />
         <input
           className="w-full py-4 px-2 border border-gray-500-400 rounded-md mb-5 focus:outline-none"
           placeholder="example@gamil.com"
           type="email"
+          name="email"
+          autoComplete="off"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.email}
         />
         <input
           className="w-full py-4 px-2 border border-gray-500-400 rounded-md mb-5 focus:outline-none"
           placeholder="Password"
           type="password"
+          name="password"
+          autoComplete="off"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.password}
         />
         {/* Radio button */}
         <div className="mb-4">
-          <input type="radio" id="male" name="Gender" />
-          <label className="mx-2" for="male">
+          <input
+            type="radio"
+            id="male"
+            name="Gender"
+            autoComplete="off"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value="male"
+          />
+          <label className="mx-2" htmlFor="male">
             Male
           </label>
-          <input type="radio" id="female" name="Gender" />
-          <label className="mx-2" for="female">
+          <input
+            type="radio"
+            id="female"
+            name="Gender"
+            autoComplete="off"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value="female"
+          />
+          <label className="mx-2" htmlFor="female">
             Female
           </label>
         </div>
         {/* birthday */}
         <div className="flex gap-x-7">
-          <select className="border border-gray-500 w-[33%]">
+          <select
+            name="byear"
+            autoComplete="off"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.byear}
+            className="border border-gray-500 w-[33%]"
+          >
             <option>Birthday Of Year</option>
             <option>1995</option>
             <option>1996</option>
             <option>1997</option>
           </select>
-          <select className="border border-gray-500 w-[33%]">
+          <select
+            name="bmonth"
+            autoComplete="off"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.bmonth}
+            className="border border-gray-500 w-[33%]"
+          >
             <option>Birthday Of Month</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
           </select>
-          <select className="border border-gray-500 w-[33%]">
+          <select
+            name="bday"
+            autoComplete="off"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.bday}
+            className="border border-gray-500 w-[33%]"
+          >
             <option>Birthday Of Day</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
           </select>
         </div>
+
         {/* submit button */}
         <div className="flex justify-between items-center pt-4">
           <input
@@ -91,3 +171,5 @@ const RegstrationForm = () => {
 };
 
 export default RegstrationForm;
+
+//
