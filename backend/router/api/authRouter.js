@@ -4,7 +4,7 @@ const _ = express.Router();
 const {newUser, activeUser, login} = require("../../controller/userContoroller")
 
 // usee create router
-_.post("/regstration", newUser);
+_.post("/", newUser);
 _.post("/active", activeUser);
 _.post("/login", login);
 
