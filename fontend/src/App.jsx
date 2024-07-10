@@ -6,11 +6,22 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+// import page
+import LoginPage from "./pages/login";
+import Home from "./pages/Home";
+import NotLoggedInUser from "./pages/privateRouter/NotLoggedInUser";
+import LoggedInUser from "./pages/privateRouter/LoggedInUser";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<Registration />}></Route>
+      <Route element={<NotLoggedInUser />}>
+        <Route path="/registration" element={<Registration />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+      </Route>
+      <Route element={<LoggedInUser />}>
+        <Route path="/" element={<Home />}></Route>
+      </Route>
     </Route>
   )
 );

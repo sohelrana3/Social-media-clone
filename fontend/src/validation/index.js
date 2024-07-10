@@ -10,3 +10,7 @@ export const singUpValid = Yup.object({
   bmonth: Yup.string().required("Please Enter Month "),
   bday: Yup.string().required("Please Enter day "),
 });
+export const loginValid = Yup.object({
+  email: Yup.string().min(3).max(30).required("Please Enter valid eamil "),
+  password: Yup.string().min(3).max(15).required("Please Enter password "),
+});
