@@ -11,18 +11,10 @@ const Home = () => {
       <Helmet>
         <title>Home Page</title>
       </Helmet>
-      <div className="mx-20 grid grid-cols-[1fr,3fr,1fr] mt-10 gap-x-10">
-        <div className="">
-          <LeftPart />
-        </div>
-        <div>
-          <HomePost />
-        </div>
-        <div>
-
-          {/* Right part */}
-        </div>
+      <div>
+        <h2>home page</h2>
       </div>
+     
     </>
   );
 };

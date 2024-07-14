@@ -11,6 +11,8 @@ import LoginPage from "./pages/login";
 import Home from "./pages/Home";
 import NotLoggedInUser from "./pages/privateRouter/NotLoggedInUser";
 import LoggedInUser from "./pages/privateRouter/LoggedInUser";
+import RootLayout from "./components/Rootlayout";
+import Messages from "./pages/Messages";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,7 +22,10 @@ const router = createBrowserRouter(
         <Route path="/login" element={<LoginPage />}></Route>
       </Route>
       <Route element={<LoggedInUser />}>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<Home />}></Route>
+          <Route path="messages" element={<Messages />}></Route>
+        </Route>
       </Route>
     </Route>
   )
