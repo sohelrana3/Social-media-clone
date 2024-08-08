@@ -1,6 +1,7 @@
 import React from 'react'
 import LeftPart from "../../components/HomeComponents/LeftPart";
 import HomePost from "../../components/HomeComponents/PostPart";
+import RightFriends from '../HomeComponents/RightPart';
 import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {
@@ -16,6 +17,7 @@ const RootLayout = () => {
         <div>
 
           {/* Right part */}
+         <RightFriends />
         </div>
       </div>
   )
