@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ReduceText } from "../../../funcations/ReduceText";
 
 const RightFriends = () => {
+  const orginalName = "Raiz Uddin islam at "
+
+  const reduceText = ReduceText(orginalName, 6)
   return (
     <>
       <div>
@@ -22,7 +26,7 @@ const RightFriends = () => {
           <div className="flex items-center gap-x-3">
             <div className="w-10 h-10 bg-gray-800 rounded-full"></div>
             <div>
-              <h5 className="text-base text-black font-bold">Raiz Islam</h5>
+              <h5 className="text-base text-black font-bold">{reduceText}</h5>
               <span className="text-sm font-normal text-gray-500">2 hours ago</span>
             </div>
             <div className="flex gap-x-1 justify-between items-center pl-4">
