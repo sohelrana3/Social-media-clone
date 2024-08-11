@@ -14,6 +14,9 @@ import LoggedInUser from "./pages/privateRouter/LoggedInUser";
 import RootLayout from "./components/Rootlayout";
 import Messages from "./pages/Messages";
 
+// Import Swiper styles
+import 'swiper/css';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
