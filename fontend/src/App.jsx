@@ -13,9 +13,10 @@ import NotLoggedInUser from "./pages/privateRouter/NotLoggedInUser";
 import LoggedInUser from "./pages/privateRouter/LoggedInUser";
 import RootLayout from "./components/Rootlayout";
 import Messages from "./pages/Messages";
+import CratePopUp from "./components/HomeComponents/PostPart/createPostPopup";
 
 // Import Swiper styles
-import 'swiper/css';
+import "swiper/css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
+      <CratePopUp />
       <RouterProvider router={router} />
     </>
   );
