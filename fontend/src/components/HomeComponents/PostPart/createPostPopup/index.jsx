@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CircleCloseIcon } from "../../../../svg/CircleClose";
 import AddPost from "./AddPost";
+import EmojiPicker from "emoji-picker-react";
+import Feeling from "../../../../svg/Feeling";
 
 const CratePopUp = () => {
+  const [picker, setpicker] = useState(false);
+  const [coursorPoint, setcoursorPoint] = useState();
+  const [text, settext] = useState("");
+  const textref = useRef();
+  const handleEmoji = ({ emoji }, e) => {
+    const ref = textref.current;
+    ref.focus();
+
+    const start = text.substring(0, ref.selectionStart);
+    const end = text.substring(ref.selectionStart);
+    const newText = start + emoji + end;
+
+    settext(newText);
+
+  };
+
+
   return (
     <div className="absolute top-0 left-0 w-full flex justify-center items-center bg-[rgba(255,255,255,0.81)] h-screen z-20">
       <div className="w-[30%] bg-white shadow-md">
@@ -22,10 +41,23 @@ const CratePopUp = () => {
         </div>
         <div className="mt4">
           <textarea
+            ref={textref}
+            value={text}
+            onChange={(e) => settext(e.target.value)}
             placeholder="What's up Samething"
             className="w-full min-h-24 outline-none p-2"
           />
         </div>
+        {/* piker click */}
+        <div onClick={() => setpicker((prev) => !prev)}>
+          <Feeling />
+        </div>
+        {picker && (
+          <div>
+            <EmojiPicker onEmojiClick={handleEmoji} />
+          </div>
+        )}
+
         {/* add post */}
         <div>
           <AddPost />
@@ -33,7 +65,9 @@ const CratePopUp = () => {
         {/* button */}
 
         <div className="mt3">
-          <button className="w-full bg-gray-700 text-white p-2 rounded">Post</button>
+          <button className="w-full bg-gray-700 text-white p-2 rounded">
+            Post
+          </button>
         </div>
       </div>
     </div>
