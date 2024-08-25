@@ -1,5 +1,6 @@
 import React from "react";
-import {CircleCloseIcon} from "../../../../svg/CircleClose"
+import { CircleCloseIcon } from "../../../../svg/CircleClose";
+import AddPost from "./AddPost";
 
 const CratePopUp = () => {
   return (
@@ -24,6 +25,15 @@ const CratePopUp = () => {
             placeholder="What's up Samething"
             className="w-full min-h-24 outline-none p-2"
           />
+        </div>
+        {/* add post */}
+        <div>
+          <AddPost />
+        </div>
+        {/* button */}
+
+        <div className="mt3">
+          <button className="w-full bg-gray-700 text-white p-2 rounded">Post</button>
         </div>
       </div>
     </div>
