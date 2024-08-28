@@ -5,11 +5,11 @@ import EmojiPickers from "./EmojiPickers";
 import Feeling from "../../../../svg/Feeling";
 import ImagesView from "./ImagesView";
 
-const CratePopUp = () => {
+const CratePopUp = ({PopShow}) => {
   const [coursorPoint, setcoursorPoint] = useState();
   const [text, settext] = useState("");
-  const [show, setshow] = useState(true);
-  const [images, setimages] = useState([])
+  const [show, setshow] = useState(false);
+  const [images, setimages] = useState([]);
   const textref = useRef();
 
   return (
@@ -19,7 +19,7 @@ const CratePopUp = () => {
           <h3 className="text-lg text-black text-center font-bold">
             Create Post
           </h3>
-          <div className="absolute top-1 right-1 cursor-pointer">
+          <div className="absolute top-1 right-1 cursor-pointer" onClick={()=> PopShow(false)}>
             <CircleCloseIcon />
           </div>
         </div>
@@ -31,16 +31,24 @@ const CratePopUp = () => {
         </div>
         {show ? (
           <div>
-            <ImagesView text={text} settext={settext} textref={textref} images={images} setimages={setimages}/>
-            <AddPost />
+            <ImagesView
+              text={text}
+              settext={settext}
+              textref={textref}
+              images={images}
+              setimages={setimages}
+              setshow={setshow}
+            />
           </div>
         ) : (
           <>
-          
-          <EmojiPickers text={text} settext={settext} textref={textref} />
-          <AddPost />
+            <EmojiPickers text={text} settext={settext} textref={textref} />
           </>
         )}
+
+        <div>
+          <AddPost setshow={setshow} show={show} />
+        </div>
 
         {/* button */}
 

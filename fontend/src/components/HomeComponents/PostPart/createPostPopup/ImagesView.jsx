@@ -3,7 +3,7 @@ import EmojiPickers from "./EmojiPickers";
 import { CircleCloseIcon } from "../../../../svg/CircleClose";
 import { Media } from "../../../../svg/Media";
 
-const ImagesView = ({ text, settext, textref, images, setimages }) => {
+const ImagesView = ({ text, settext, textref, setshow }) => {
   const chooseFile = useRef(null);
   const [imge, setimge] = useState([]);
 
@@ -29,7 +29,7 @@ const ImagesView = ({ text, settext, textref, images, setimages }) => {
   return (
     <>
       <EmojiPickers text={text} settext={settext} textref={textref} />
-      <div className="p-2 border border-gray-200 rounded-md mb-5">
+      <div className="p-2 border border-gray-200 rounded-md mb-5 relative">
         <div className="w-full h-[300px] bg-gray-200 rounded-md ">
           <input
             type="file"
@@ -39,6 +39,9 @@ const ImagesView = ({ text, settext, textref, images, setimages }) => {
             ref={chooseFile}
             onChange={handleImagesUpload}
           />
+          <div className="absolute top-0 right-0 z-50 cursor-pointer " onClick={()=> setimge([])}>
+            <CircleCloseIcon />
+          </div>
           {imge && imge.length ? (
             <div
               className={`${
@@ -46,20 +49,40 @@ const ImagesView = ({ text, settext, textref, images, setimages }) => {
                   ? "overflow-hidden w-full h-full"
                   : imge.length === 2
                   ? "overflow-hidden w-full h-full grid grid-cols-2 gap-1"
-                  : ""
+                  : imge.length === 3
+                  ? "overflow-hidden w-full h-full grid grid-cols-2 gap-1"
+                  : imge.length === 4
+                  ? "overflow-hidden w-full h-full grid grid-cols-2 gap-1"
+                  : imge.length >= 5
+                  ? "overflow-hidden w-full h-full grid grid-cols-2 gap-1"
+                  : "overflow-hidden"
               }`}
             >
-              {imge.map((item, index) => (
+              {imge.slice(0, 4).map((item, index) => (
                 <img
                   key={index}
                   src={item}
-                  className="object-cover w-full h-full"
+                  className={`object-cover w-full h-full ${
+                    imge.length === 3
+                      ? "[&:nth-of-type(1)]:row-start-1"
+                      : imge.length === 4
+                      ? "[&:nth-of-type(1)]:row-start-2"
+                      : ""
+                  }`}
                 />
               ))}
+              <div>
+                {imge.length >= 5 && (
+                  <div className="absolute bottom-2 right-2 w-10 h-10  bg-gray-100 flex justify-center items-center rounded-full">
+                    <span> +{imge.length - 4}</span>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
-            <div className="relative flex items-center justify-center h-full">
-              <div className="absolute top-0 right-0">
+            <div className=" flex items-center justify-center h-full">
+              <div className="absolute top-0 right-0 z-50 cursor-pointer" onClick={()=> setshow(false)}>
+            
                 <CircleCloseIcon />
               </div>
 
